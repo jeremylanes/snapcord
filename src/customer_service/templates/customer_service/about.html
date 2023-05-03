@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block aria_current_about %}aria-current="page"{% endblock aria_current_about %}
+
+
+
+{% block about_selected %}selected{% endblock about_selected %}
+
+
+{% block content %}
+
+<div data-page-no="3" class="mx-auto page-width-2">
+    <div class="position-relative page-width-1 page-right tm-border-top tm-border-bottom">
+      <div class="circle intro-circle-1"></div>
+      <div class="circle intro-circle-2"></div>
+      <div class="circle intro-circle-3"></div>
+      <div class="circle intro-circle-4"></div>
+      <div class="tm-bg-dark content-pad">
+        <h2 class="mb-4 ">Bienvenue sur notre page "À propos" !</h2>
+        <p class="mb-4 ">
+          Nous sommes une boutique en ligne de vente d'électronique, offrant une large gamme de produits de qualité supérieure à des prix abordables, en République Démocratique du Congo et au Burundi. 
+        </p>
+        <p class="mb-4">
+          Nous proposons une large gamme de produits de haute qualité provenant de grandes marques telles que Apple, Samsung, Huawei, HP et bien d'autres. Nos produits sont sélectionnés avec soin pour garantir la qualité, la performance et la durabilité. Nous offrons également une garantie sur tous nos produits pour garantir la satisfaction de nos clients.
+        </p>
+        <p class="mb-4">
+          Nous offrons une livraison rapide et fiable dans toute la RDC et au Burundi. Nous travaillons avec des partenaires de livraison réputés pour garantir que votre produit vous parvienne en temps voulu et en parfait état.
+        </p>
+        <p class="mb-4">
+          Nous espérons que vous apprécierez votre expérience de shopping avec nous. N'hésitez pas à <a href="{% url 'customer_service:message' %}">nous contacter</a> si vous avez des questions ou des commentaires sur notre boutique en ligne.
+        </p>
+        
+      </div>              
+    </div>
+  </div>
+
+
+
+
+
+
+{% endblock content %}

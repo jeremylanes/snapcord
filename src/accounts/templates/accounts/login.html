@@ -1,0 +1,48 @@
+{% extends 'accounts/base.html' %}
+
+{% block form %}
+<form class="c-panel__form" method="POST" >
+  {% csrf_token %}
+  <input type="email" class="c-panel__input"  name="email" placeholder="Adresse mail" value="{{ email }}" required>
+  <input type="password" class="c-panel__input" name="password" placeholder="Mot de pass" required>
+
+  {% if error %}
+    <small style="color: rgb(255, 68, 0);">{{ error }}</small>
+  {% endif %}
+  <input type="submit" class="c-btn" value="Se connecter">
+  <span class="c-panel__span">OR</span>
+</form>
+{% endblock form %}
+
+
+{% block content %}
+<p>Vous n'avez pas de compte? <span> <a href="{% url 'accounts:singup' %}">Ouvrir un compte</a></span></p>
+{% endblock content%}
+
+
+
+<!-- 
+  <form method="POST" class="login-box">
+    
+    <h1>Se connecter</h1>
+    <div class="textbox">
+      <i class="fas fa-envelope"></i>
+      <input type="email" name="email" placeholder="Adresse mail"  required>
+    </div>
+
+    <div class="textbox">
+      <i class="fas fa-lock"></i>
+      <input type="password" placeholder="Mot de pass"  required>
+    </div>
+    
+
+    < class="btn" >
+
+    <br> <br> 
+    <p><a href="" style="color: #4caf50;" ></a></p>
+    <br> <br>
+  </form>
+
+
+
+ -->

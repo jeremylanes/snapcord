@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block main %}
+
+
+{% comment %} 
+<nav class="home-navbar">
+    <div class="home-nav-wrapper">
+        <img src="img/logo.PNG" class="home-brand-img" alt="">
+        <input type="text" class="home-search-box" placeholder="search">
+        <div class="home-nav-items">
+            <img src="img/home.PNG" class="home-icon" alt="">
+            <img src="img/messenger.PNG" class="home-icon" alt="">
+            <img src="img/add.PNG" class="home-icon" alt="">
+            <img src="img/explore.PNG" class="home-icon" alt="">
+            <img src="img/like.PNG" class="home-icon" alt="">
+            <div class="home-icon user-profile"></div>
+        </div>
+    </div>
+</nav>
+{% endcomment %}
+
+
+
+
+
+<section class="home-main">
+    <div class="home-wrapper">
+        <div class="home-left-col">
+            <div class="home-status-wrapper">
+                
+                <div class="home-status-card" id="new_story">
+                    <div class="home-profile-pic"><img src="" alt=""></div>
+                    <p class="home-username">+ new story</p>
+                </div>
+                
+                {% for post in posts %}
+                {% if post.type.name == 'story' and post.creation_date.date == current_date.date %}
+                <div class="home-status-card">
+                    <div class="home-profile-pic"><img src="{{post.postmedia_set.get.thumbnail.url}}" alt=""></div>
+                    <p class="home-username">@{{post.user.username}} </p>
+                </div>
+                {% endif %}
+                {% endfor %}
+                
+                {% comment %} // +5 more status card elements. {% endcomment %}
+        </div>
+        
+        <div class="home-left-col">
+            {% comment %} // status wrappers {% endcomment %}
+
+            {% for post in posts %}
+            {% if post.type.name == 'post' %}
+            <div class="home-post">
+                <div class="home-info">
+                    <a href="{% url 'accounts:profile' username=post.user.username %}" style="text-decoration: none;">
+                        <div class="home-user">
+                            <div class="home-profile-pic"><img src="{% if post.user.profile_picture %}{{post.user.profile_picture.url}}{% endif %}" alt=""></div>
+                            <p class="home-username"> {{post.user.get_full_name}} </p>
+                        </div>
+                    </a>
+                    <img src="{% static 'assets/images/option.PNG' %}" class="home-options" alt="">
+                </div>
+                <img src="{{post.postmedia_set.get.thumbnail.url}}" class="home-post-image" alt="">
+                <div class="home-post-content">
+                    <div class="home-reaction-wrapper">
+                        <a href="{% url 'publication:react' pk=post.pk %}"><img src="{% static 'assets/images/like.PNG' %}" class="home-icon" alt="" {% if post.user.reaction_set.get in post.reaction_set.all%} style="background-color: brown;" {% endif %}></a>
+                        <img src="{% static 'assets/images/comment.PNG' %}" class="home-icon" alt="">
+                        <img src="{% static 'assets/images/send.PNG' %}" class="home-icon" alt="">
+                        <img src="{% static 'assets/images/save.PNG' %}" class="home-save home-icon" alt="">
+                    </div>
+                    <p class="home-likes">{{post.reaction_set.all|length}}likes</p>
+                    <p class="home-description"><span>{{post.user.username}} </span> {{post.caption}} </p>
+                    <p class="home-post-time">2 minutes ago</p>
+                    
+                    <!-- comentaire -->
+                    {% for comment in post.comment_set.all %}
+                    <p class="home-description"><span>{{comment.user.username}}</span> {{comment.content}}</p>
+                    {% endfor %}
+                    <!-- end comment -->
+                </div>
+                
+                <form class="home-comment-wrapper" method="POST" action="{% url 'publication:comment' pk=post.pk %}">
+                    {% csrf_token %}
+                    <img src="{% static 'assets/images/smile.PNG' %}" class="home-icon" alt="">
+                    <input name="content" type="text" class="home-comment-box" placeholder="Add a comment" required>
+                    <input type="submit" class="home-comment-btn" value="post">
+                    {% comment %} <button class="home-comment-btn">post</button> {% endcomment %}
+                </form>
+            </div>
+            {% endif %}
+            {% empty %}
+            zero post man 
+            {% endfor %}
+            {% comment %} // +5 more post elements {% endcomment %}
+        </div>  
+    </div>
+
+    {% comment %} // left col element {% endcomment %}
+    <div class="home-right-col">
+        {% if user.is_authenticated %}
+        <div class="home-profile-card">
+            <div class="home-profile-pic">
+                <a href="{% url 'accounts:profile' username=user.username %}"><img src="{% if user.profile_picture %}{{user.profile_picture.url}}{% endif %}" alt=""></a>
+            </div>
+            <a href="{% url 'accounts:profile' username=user.username %}" style="display: block;">
+                <p class="home-username"> {{user.get_full_name}} </p>
+                <p class="home-sub-text">@{{user.username}}</p>
+            </a>
+            <button class="home-action-btn">switch</button>
+        </div>
+        {% endif %}
+        <p class="home-suggestion-text">Suggestions for you</p>
+        {% for user_suggest in users %}
+        {% if not user == user_suggest %}
+        <div class="home-profile-card">
+            <div class="home-profile-pic">
+                <a href="{% url 'accounts:profile' username=user_suggest.username %}"><img src="{% if user_suggest.profile_picture %} {{user_suggest.profile_picture.url}} {% endif %} " alt=""></a>
+            </div>
+            <div>
+                <a href="{% url 'accounts:profile' username=user_suggest.username %}" style="display: block;"><p class="home-username"> {{user_suggest.get_full_name}} </p></a>
+                <p class="home-sub-text">followed bu user</p>
+            </div>
+            <a href="{% url 'accounts:follow' username=user_suggest.username %}"><button class="home-action-btn">{% if user_suggest in user.follower_set.all %}Unfollow{% else %}follow{% endif %}</button></a>
+        </div>
+        {% endif %}
+        {% endfor %}
+        
+    </div>
+</section>
+
+
+
+
+
+{% endblock main %}
+
+
+
+
+
+{% comment %} {% block main %}
+
+
+{% for post in posts %}
+
+
+<img src="{{ post.thumbnail.url }}" alt="">
+<p>{{ post.caption }}</p>
+
+
+{% endfor %}
+
+
+{% endblock main %} {% endcomment %}

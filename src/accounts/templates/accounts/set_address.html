@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
+
+{% endblock head %}
+
+{% block content %}
+
+
+      <form method="POST" class="skills" style="margin-top: 0;" >
+        {% csrf_token %}
+        <h6>Adresse de Livraison</h6>
+        
+        <ul>
+
+          <p>
+            <label for="city">Ville: </label>
+            <select name="city" required>
+              <option value="bukavu">Bukabu</option>
+              <option value="goma">Goma</option>
+              <option value="bujumbura">Bujumbura</option>
+              <option value="uvira">Uvira</option>
+            </select>
+          </p>
+          <p>
+            <label for="zip_code">Code postal: </label>
+            <input type="text" name="zip_code" placeholder="le code postal." value="{{zip_code}}">
+          </p>
+          <p>
+            <label for="neighborhood">Quartier: </label>
+            <input type="text" name="neighborhood" placeholder="Le nom du quartier." value="{{neighborhood}}">
+          </p>
+          <p>
+            <label for="street">Rue: </label>
+            <input type="text" name="street" placeholder="Le nom de la rue." required value="{{street}}">
+          </p>
+          <p>
+            <label for="number">Numéro: </label>
+            <input type="text" name="number" placeholder="Le numéro de la maison." required value="{{number}}">
+          </p>
+
+          <br> <br>
+          <p>
+            <input type="submit" value="Valider l'adresse">
+          </p>
+
+        </ul>
+      </form>
+
+  
+
+
+
+
+{% endblock content %}
+
+
+
+
+

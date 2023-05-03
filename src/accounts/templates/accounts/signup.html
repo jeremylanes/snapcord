@@ -1,0 +1,100 @@
+{% extends 'accounts/base.html' %}
+
+
+{% block form %}
+<form class="c-panel__form" method="POST" >
+  {% csrf_token %}
+  <input type="text" class="c-panel__input" name="first_name" placeholder="Prénom" value="{{first_name}}"  required>
+  <input type="text" class="c-panel__input" name="last_name" placeholder="Nom" value="{{last_name}}" required>
+  <!-- username -->
+  <input type="text" class="c-panel__input" name="username" placeholder="Nom d'utilisateur" value="{{username}}" required>
+  {% if username_error %}
+    <small style="color: rgb(255, 68, 0);">{{ username_error }}</small>
+  {% endif %}
+  <!-- email -->
+  <input type="email" class="c-panel__input"  name="email" placeholder="Adresse mail" value="{{ email }}" required>
+  {% if email_error %}
+    <small style="color: rgb(255, 68, 0);">{{ email_error }}</small>
+  {% endif %}
+  <!-- password -->
+  <input type="password" class="c-panel__input" name="password1" placeholder="Mot de pass" value="{{password1}}" required>
+  <input type="password" class="c-panel__input" name="password2" placeholder="Confirmer le mot de pass" value="{{password2}}" required>
+  {% if password_error %}
+    <small style="color: rgb(255, 68, 0);">{{ password_error }}</small>
+  {% endif %}
+  
+
+  {% if error %}
+    <small style="color: rgb(255, 68, 0);">{{ error }}</small>
+  {% endif %}
+  <input type="submit" class="c-btn" value="Créer un compte">
+  <span class="c-panel__span">OR</span>
+</form>
+{% endblock form %}
+
+
+{% block content %}
+<p>Vous avez déjà un compte? <span> <a href="{% url 'accounts:login' %}">Se connecter</a></span></p>
+{% endblock content%}
+
+
+<!-- 
+  <form method="POST" class="login-box">
+    {% csrf_token %}
+    <h1>S'inscrire </h1>
+
+    <div class="textbox">
+        <i class="fas "></i>
+        <input type="text" placeholder="Prénom" name="first_name" required>
+    </div>
+
+    <div class="textbox">
+        <i class="fas "></i>
+        <input type="text" placeholder="Nom" name="last_name" required>
+    </div>
+
+
+    <div class="textbox">
+      <i class="fas fa-user"></i>
+      <input type="text" placeholder="Nom d'utilisateur " name="username"  required>
+    </div>
+    
+
+    <div class="textbox">
+      <i class="fas fa-envelope"></i>
+      <input type="email" placeholder="Adresse mail" name="email" value="{{email}}" required>
+    </div>
+    
+
+
+    <div class="textbox">
+      <i class="fas fa-lock"></i>
+      <input type="password" placeholder="Mot de pass" name="password1" required>
+    </div>
+    <div class="textbox">
+      <i class="fas fa-lock"></i>
+      <input type="password" placeholder="Confirmer le mot de pass" name="password2" value="{{password2}}" required>
+    </div>
+
+    
+
+
+    
+
+    {% if error %}
+    <p>
+      <small style="color: rgb(255, 68, 0);">
+        {{ error }}
+      </small>
+    </p>
+    {% endif %}
+    
+
+    <input type="submit" class="btn" value="S'inscrire">
+
+    <br> <br>
+    <p>Vous avez déjà un compte? <a href="{% url 'accounts:login' %}" style="color: #4caf50;">Connectez-vous</a></p>
+    <br> <br>
+  </form>
+
+ -->

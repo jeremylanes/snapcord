@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block aria_current_about %}aria-current="page"{% endblock aria_current_about %}
+{% block content %}
+
+
+
+
+<div data-page-no="3" class="mx-auto page-width-2">
+    <div class="position-relative page-width-1 page-right tm-border-top tm-border-bottom">
+      <div class="circle intro-circle-1"></div>
+      <div class="circle intro-circle-2"></div>
+      <div class="circle intro-circle-3"></div>
+      <div class="circle intro-circle-4"></div>
+      <div class="tm-bg-dark content-pad">
+        <h2 class="mb-4">Merci pour votre commande !</h2>
+        <!-- <p class="mb-4 shalimar">
+          Vous est surement sur la plus active des toute les plateforme e-commerce
+           <span class="highlight">bituYangu</span> Vous propose les mailleurs gadgets 
+           de la derniere generation de toutes les game.
+        </p> -->
+        <p class="mb-4 shalimar">
+          Cher{% if user.gender == 'femme' %}e{% endif %} {{user.get_full_name}},
+          <br>
+          Toute l'équipe de bituYangu tient à vous remercier sincèrement pour votre commande sur notre site. Nous sommes ravis que vous ayez choisi de faire confiance à notre boutique en ligne et nous espérons que vous êtes satisfait{% if user.gender == 'femme' %}e{% endif %} de votre achat.
+          <br>
+          Votre commande a bien été prise en compte et sera traitée dans les plus brefs délais. Nous vous tiendrons informé{% if user.gender == 'femme' %}e{% endif %} par e-mail de l'avancement de votre commande et de la date de livraison prévue.
+          <br>
+          Si vous avez des questions ou des préoccupations concernant votre commande, n'hésitez pas à nous contacter à l'adresse e-mail suivante : <a href="mailto:bituyangu@gmail.com">bituyangu@gmail.com</a> ou en via notre service <a href="{% url 'customer_service:message' %}">client</a> . 
+          <br>
+          En attendant, n'oubliez pas de consulter notre site pour découvrir d'autres produits qui pourraient vous intéresser. Nous sommes convaincus que vous y trouverez de nombreux articles de qualité qui répondront à vos besoins.
+          <br>
+          Encore une fois, merci de votre confiance et de votre fidélité envers notre boutique en ligne.
+          <br>
+          Cordialement,
+          <br>
+          L'équipe bituYangu
+
+        </p>
+      </div>              
+    </div>
+  </div>
+{% endblock content %}
+
+

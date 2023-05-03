@@ -1,0 +1,105 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'assets/style.css' %}" />
+  </head>
+
+  <body>
+    {% block post_form %}
+    <div class="form-post-body" id="postform">
+      <form class="form-post-container" method="POST" action="{% url 'publication:new_post' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+          <div class="form-post-container-close" id="closebtn">&times;</div>
+          <!-- <img src="https://images.unsplash.com/photo-1534670007418-fbb7f6cf32c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" alt="image"> -->
+          <input class="form-post-img" type="file"  name="thumbnail" id="thumbnail" accept="image/*" required style="background-image: url(https://images.unsplash.com/photo-1534670007418-fbb7f6cf32c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80);" >
+          <div class="form-post-container-text">
+            <h2 class="form-post-h2" >New Post <br>for You</h2>
+            <p class="form-post-p">Sign up to receive ideas, free <br> components and free resources plus 15% on all of our <br> pro UI kits.</p>
+            <input class="form-post-input" type="text" name="caption" id="" placeholder="Ajouter une légende">
+            <input class="form-post-button" type="submit" value="Publier">
+            <!-- <button type="submit">Subscribe</button> -->
+            <!-- <span>No spams included</span> -->
+          </div>
+          <input type="text" name="post_type" id="post_type" value="post" style="visibility: hidden;" >
+      </form>
+    </div>
+    {% endblock post_form %}
+    <nav>
+      <div class="mock"></div>
+      <div class="fixed">
+        <div class="nav-content">
+          <img class="logo" alt="logo" src="{% static 'assets/images/logo.png' %}" />
+          <div class="desktop-only">
+            <input type="text" class="search-box search-guide" placeholder="Search">
+          </div>
+          
+          <!-- <div class="desktop-only">
+            <div class="search-guide">
+              <span class="search-icon"></span>
+              <span class="search-placeholder">Search</span>
+            </div>
+          </div> -->
+          {% if user.is_authenticated %}
+          <div class="nav-items">
+            <a href="{% url 'home:index' %}"><img src="{% static 'assets/images/home.PNG' %}" class="icon" alt=""></a>
+            <img src="{% static 'assets/images/messenger.PNG' %}" class="icon" alt="">
+            <img src="{% static 'assets/images/add.PNG' %}" class="icon" alt="" id="openbtn">
+            <a href="{% url 'accounts:logout' %}"><img src="{% static 'assets/images/explore.PNG' %}" class="icon" alt=""  style=""></a>
+            <img src="{% static 'assets/images/like.PNG' %}" class="icon" alt="">
+            <a href="{% url 'accounts:profile' username=user.username %}"><div class="icon user-profile" style="background-image: url({% if user.profile_picture %}{{user.profile_picture.url}}{% endif %});background-repeat:no-repeat; background-size:cover; background-position: center;"></div></a>
+        </div>
+          {% else %}
+          <div>
+            <a href="{% url 'accounts:login' %}"><button class="primary">Log In</button></a>
+            <a href="{% url 'accounts:singup' %}"><button>Sign Up</button></a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    {% block main %}{% endblock main %}
+
+
+    <script>
+      let closebtn = document.getElementById("closebtn");
+      let openbtn = document.getElementById("openbtn");
+      let postform = document.getElementById("postform");
+      // story
+      let new_story = document.getElementById("new_story")
+  
+      closebtn.addEventListener("click", () => {
+          if(getComputedStyle(postform).display != "none"){
+            postform.style.display = "none";
+          } else {
+            postform.style.display = "grid";
+          }
+        })
+
+        openbtn.addEventListener("click", () => {
+          if(getComputedStyle(postform).display != "none"){
+            postform.style.display = "none";
+          } else {
+            postform.style.display = "grid";
+          }
+          post_type.setAttribute("value", "post")
+        })
+
+        // new_story
+        let post_type = document.getElementById('post_type')
+        new_story.addEventListener("click", () =>{
+          if(getComputedStyle(postform).display != "none"){
+            postform.style.display = "none";
+          } else {
+            postform.style.display = "grid";
+          }
+          post_type.setAttribute("value", "story")
+        })
+  </script>
+    
+  </body>
+</html>
